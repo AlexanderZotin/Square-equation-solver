@@ -3,18 +3,19 @@ package solver.controller;
 import solver.model.QuadraticEquationSolver;
 import solver.model.SquareEquation;
 import solver.view.View;
-import java.util.Objects;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Optional;
 
-public class ApplicationController implements Controller {
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class Controller implements ActionListener {
     private final View view;
 
-    public ApplicationController(View view) {
-        this.view = Objects.requireNonNull(view);
-    }
-
     @Override
-    public void countRequested() {
+    public void actionPerformed(ActionEvent e) {
         Optional<SquareEquation> equation = view.parseData();
         equation.ifPresent(squareEquation -> view.showSolving(QuadraticEquationSolver.solve(squareEquation)));
     }

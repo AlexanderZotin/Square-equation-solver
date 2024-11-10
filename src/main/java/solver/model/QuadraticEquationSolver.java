@@ -4,14 +4,16 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
+import lombok.NonNull;
+
 public final class QuadraticEquationSolver {
     private static final MathContext mathContext = new MathContext(8, RoundingMode.HALF_UP);
 
     private QuadraticEquationSolver() {
-        throw new AssertionError("Не должно быть экземпляров класса QuadraticEquationSolver!");
+        throw new AssertionError("No instances of class QuadraticEquationSolver for you!");
     }
     
-    public static String solve(SquareEquation equation) {
+    public static String solve(@NonNull SquareEquation equation) {
         StringBuilder solving = new StringBuilder("<html><h2>Решение:</h2>");
         BigDecimal discriminant = countDiscriminant(equation);
         solving.append(explainDiscriminantCount(discriminant, equation));
@@ -20,7 +22,7 @@ public final class QuadraticEquationSolver {
             case NOTHING -> "Дискриминант меньше нуля, поэтому корней нет!<h2>Ответ:</h2> Нет корней";
             case TWO -> countTwoRoots(equation, discriminant);
             case ONE -> countOneRoot(equation);
-            default -> throw new UnsupportedOperationException("Неожиданная enum-константа: " + rootsCount);
+            default -> throw new UnsupportedOperationException("Unexpected enum-constant: " + rootsCount);
         });
         return solving.toString();
     }
